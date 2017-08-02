@@ -78,6 +78,14 @@ function isAllowedToSend(address _address) constant returns (bool) {
 return isAllowedToSendFundsMapping[_address].allowed || _address == owner;
 }
 
+        // During first unlock attempt fetch total number of locked tokens.
+        if (tokensCreated == 0)
+            tokensCreated = lnks.balanceOf(this);
+
+        var allocation = allocations[msg.sender];
+        allocations[msg.sender] = 0;
+        var toTransfer = tokensCreated * allocation / totalAllocations;
+
 // check to make sure the msg.sender is the owner or it will suicide the contract and return funds to the owner
 function killWallet() {
 if(msg.sender == owner) {
