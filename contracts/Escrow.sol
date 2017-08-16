@@ -10,6 +10,28 @@ contract LNKToken {
   function transfer(address _to, uint _value) returns (bool success);
 }
 
+ // user sells token for Silver
+    // user must set allowance for this contract before calling
+    function sell(uint256 amount) {
+        if (buysTokens || msg.sender == owner) {
+            uint256 can_buy = this.balance / buyPrice;  // token lots contract can buy
+            uint256 order = amount / units;             // token lots available
+
+            if(order > can_buy) order = can_buy;        // adjust order for funds
+
+            if (order > 0)
+            { 
+                // extract user tokens
+                if(!ERC20(asset).transferFrom(msg.sender, address(this), amount)) throw;
+
+                // pay user
+                if(!msg.sender.send(order * buyPrice)) throw;
+            }
+            UpdateEvent();
+        }
+    }
+/////
+
 contract TokenEscrow {
   address owner;
   modifier owneronly { if (msg.sender == owner) _ }
