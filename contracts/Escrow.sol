@@ -70,7 +70,7 @@ contract TokenEscrow {
     if (escrow.token == 0)
       throw;
 
-    IToken token = IToken(escrow.token);
+    LNKToken token = LNKToken(escrow.token);
 
     // Check the token contract if we have been issued tokens already
     if (!escrow.tokenReceived) {
@@ -103,4 +103,25 @@ contract TokenEscrow {
   function kill() owneronly {
     suicide(msg.sender);
   }
+  
+  contract LNKtoken {
+  address owner;
+  modifier owneronly { if (msg.sender == owner) _ }
+  function setOwner(address _owner) owneronly {
+    owner = _owner;
+  }
+
+  function LNKtoken() {
+    owner = msg.sender;
+  }
+
+  struct Escrow {
+    address token;           // address of the token contract
+    uint tokenAmount;        // number of tokens requested
+    bool tokenReceived;      // are tokens received?
+    uint price;              // price to be paid by buyer
+    address seller;          // seller's address
+    address recipient;       // address to receive the tokens
+  }
+
 }
