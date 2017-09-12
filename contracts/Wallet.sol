@@ -94,8 +94,6 @@ suicide(owner);
 }
 }
 
- /// @notice Get the addresses of all channel managers for all registered tokens
-    /// @return addresses of all channel managers
     function channelManagerAddresses()
         constant
         returns (address[])
