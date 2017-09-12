@@ -93,3 +93,26 @@ suicide(owner);
 }
 }
 }
+
+ /// @notice Get the addresses of all channel managers for all registered tokens
+    /// @return addresses of all channel managers
+    function channelManagerAddresses()
+        constant
+        returns (address[])
+    {
+        uint i;
+        address token_address;
+        address[] memory result;
+
+        result = new address[](tokens.length);
+
+        for (i = 0; i < tokens.length; i++) {
+            token_address = tokens[i];
+            result[i] = registry[token_address];
+        }
+
+        return result;
+    }
+
+    function () { revert(); }
+}
