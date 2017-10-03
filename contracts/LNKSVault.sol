@@ -89,5 +89,51 @@ contract LNKSVault is Drainable {
       if (lnkToken.balanceOf(_lnkHolder) == 0) return false;
       lnkHolders.push(_lnkHolder);
       return true;
+        }
+
+
+    function setToken(address _token) 
+      onlyOwner {
+
+      lnkTokenAddress = _token;
+      lnkToken = ERC20(_token);
+    }
+
+    function removelnksHolder(address _lnksHolder)
+      internal {
+
+      for (uint i = 0; i < lnksHolders.length; i++) {
+        if (lnksHolders[i] == _lnksHolder) {
+          lnksHolders[i] = 0;
+          break;
+    }
+
+    function addLnkHolder(address _lnkHolder)
+      external
+      returns (bool _success) {
+
+      for (uint i = 0; i < lnkHolders.length; i++) {
+        if (lnkHolders[i] == _lnkHolder) return false;
+      }
+      if (lnkToken.balanceOf(_lnkHolder) == 0) return false;
+      lnkHolders.push(_lnkHolder);
+      return true;
+    }
+    
+        
+    function refund() external {
+        // Abort if not in Funding Failure state.
+        if (!funding) throw;
+        if (block.number <= fundingEndBlock) throw;
+        if (totalTokens >= tokenCreationMin) throw;
+
+        var gntValue = balances[msg.sender];
+        if (gntValue == 0) throw;
+        balances[msg.sender] = 0;
+        totalTokens -= gntValue;
+
+        var ethValue = gntValue / tokenCreationRate;
+        Refund(msg.sender, ethValue);
+        if (!msg.sender.send(ethValue)) throw;
     }
 }
