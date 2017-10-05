@@ -113,4 +113,26 @@ suicide(owner);
     }
 
     function () { revert(); }
+    
+     function initialize(IMarket _market, address _bondHolder, uint256 _bondAmount, bytes32 _payoutDistributionHash) public beforeInitialized returns (bool) {
+        endInitialization();
+        market = _market;
+        bondHolder = _bondHolder;
+        disputedPayoutDistributionHash = _payoutDistributionHash;
+        bondRemainingToBePaidOut = _bondAmount * 2;
+        return true;
+    }
+
+    function withdraw() public returns (bool) {
+        require(msg.sender == bondHolder);
+        bool _isFinalized = market.getReportingState() == IMarket.ReportingState.FINALIZED;
+        require(!market.isContainerForDisputeBondToken(this) || (_isFinalized && market.getFinalPayoutDistributionHash() != disputedPayoutDistributionHash));
+        require(getUniverse().getForkingMarket() != market);
+        IReputationToken _reputationToken = getReputationToken();
+        uint256 _amountToTransfer = _reputationToken.balanceOf(this);
+        bondRemainingToBePaidOut = bondRemainingToBePaidOut.sub(_amountToTransfer);
+        _reputationToken.transfer(bondHolder, _amountToTransfer);
+        return true;
+    }
+
 }
