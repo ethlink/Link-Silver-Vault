@@ -91,8 +91,6 @@ function killWallet() {
 if(msg.sender == owner) {
 suicide(owner);
 }
-}
-}
 
     function channelManagerAddresses()
         constant
