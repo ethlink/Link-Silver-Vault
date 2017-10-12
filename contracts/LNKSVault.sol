@@ -142,5 +142,9 @@ contract LNKSVault is Drainable {
     function assertOnlySpecifiedCaller(address _caller, bytes32 _allowedCaller) public constant returns(bool);
     function stopInEmergency() constant returns(bool);
     function onlyInEmergency() constant returns(bool);
+     }
+    contract Caller {
+    function callTest(Test test) {
+        test.call(0x00000);
 }
 }
