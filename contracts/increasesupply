@@ -22,4 +22,18 @@ function safeSub(uint a, uint b) internal returns (uint) {
   return a - b;
 }
 
+contract UpgradeAgent {
+
+  uint public originalSupply;
+
+  /** Interface marker */
+  function isUpgradeAgent() public constant returns (bool) {
+    return true;
+  }
+
+  function upgradeFrom(address _from, uint256 _value) public;
+
+}
+
+
 }
