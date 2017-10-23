@@ -120,9 +120,6 @@ contract LNKSVault is Drainable {
       return true;
     }
     
-   
-}
-    
         
     function refund() external {
         // Abort if not in Funding Failure state.
