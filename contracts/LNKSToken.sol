@@ -165,7 +165,7 @@ contract UpgradeableToken is StandardToken {
   function canUpgrade() public constant returns(bool) {
      return true;
   }
-
+ }
 
 
 
