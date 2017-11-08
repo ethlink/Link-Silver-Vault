@@ -3,7 +3,8 @@
 //
 // The recipient can make a simple Ether transfer to get the tokens released to his address.
 //
-
+import 'LNKSToken.sol';              
+import 'LNKSVault.sol';  
 
 contract LNKToken {
   function balanceOf(address _address) constant returns (uint balance);
