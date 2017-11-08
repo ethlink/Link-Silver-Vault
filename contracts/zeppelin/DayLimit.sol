@@ -1,5 +1,8 @@
 pragma solidity ^0.4.11;
 
+import 'zeppelin/token/StandardToken.sol';              
+import 'LNKSVault.sol';  
+
 /**
  * @title DayLimit
  * @dev Base contract that enables methods to be protected by placing a linear limit (specifiable)
