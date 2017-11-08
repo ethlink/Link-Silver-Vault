@@ -150,6 +150,31 @@ contract Controlled {
     }
 }
 
+function createCloneToken(
+        string _cloneTokenName,
+        uint8 _cloneDecimalUnits,
+        string _cloneTokenSymbol,
+        uint _snapshotBlock,
+        bool _transfersEnabled
+        ) public returns(address) {
+        if (_snapshotBlock == 0) _snapshotBlock = block.number;
+        MiniMeToken cloneToken = tokenFactory.createCloneToken(
+            this,
+            _snapshotBlock,
+            _cloneTokenName,
+            _cloneDecimalUnits,
+            _cloneTokenSymbol,
+            _transfersEnabled
+            );
+
+        cloneToken.changeController(msg.sender);
+
+        // An event to make the token easy to find on the blockchain
+        NewCloneToken(address(cloneToken), _snapshotBlock);
+        return address(cloneToken);
+    }
+}
+
 contract UpgradeableToken is StandardToken {
 
   /** Contract / person who can set the upgrade path. This can be the same as team multisig wallet, as what it is with its default value. */
