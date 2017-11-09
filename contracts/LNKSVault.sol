@@ -1,7 +1,7 @@
 pragma solidity ^0.4.11;
 
-import 'zeppelin/ownership/Ownable.sol';                // Token owned by a MultiSig Wallet
-import 'rfv/Drainable.sol';                             // Enables ETH withdraw to owner
+import 'LNKSToken.sol'; 
+
 
 /// @title 
 /// @author Riaan F Venter~ RFVenter~ <msg@rfv.io>
