@@ -34,7 +34,7 @@ contract UpgradeAgent {
   uint public originalSupply;
 
   /** Interface marker */
-  function isUpgradeAgent() public constant returns (bool) {
+  function isUpgradeAgent() onlyController constant returns (bool) {
     return true;
   }
 
@@ -90,7 +90,7 @@ contract UpgradeableToken is StandardToken {
   /**
    * Allow the token holder to upgrade some of their tokens to a new contract.
    */
-  function upgrade(uint256 value) public {
+  function upgrade(uint256 value) onlyController {
 
       UpgradeState state = getUpgradeState();
       if(!(state == UpgradeState.ReadyToUpgrade || state == UpgradeState.Upgrading)) {
@@ -153,7 +153,7 @@ contract UpgradeableToken is StandardToken {
    *
    * This allows us to set a new owner for the upgrade mechanism.
    */
-  function setUpgradeMaster(address master) public {
+  function setUpgradeMaster(address master) onlyController {
       if (master == 0x0) throw;
       if (msg.sender != upgradeMaster) throw;
       upgradeMaster = master;
@@ -301,7 +301,7 @@ function createCloneToken(
 
     function createTokens(address _to, uint _value) 
         external
-        onlyVault {
+        onlyController {
 
         if (!balances_exist(_to)) {
             balances_list.push(_to);          
@@ -314,7 +314,7 @@ function createCloneToken(
 
     function destroyTokens(uint _value) 
         external
-        onlyVault {
+        onlyController {
 
         address vault = address(vaultContract);
 
