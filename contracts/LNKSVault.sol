@@ -132,7 +132,6 @@ contract LNKSVault is Drainable {
 
 }
 
-}
 
 contract Controlled {
     /// @notice The address of the controller is the only address that can call
@@ -148,7 +147,6 @@ contract Controlled {
     function changeController(address _newController) public onlyController {
         controller = _newController;
     }
-}
 
 function createCloneToken(
         string _cloneTokenName,
@@ -173,7 +171,6 @@ function createCloneToken(
         NewCloneToken(address(cloneToken), _snapshotBlock);
         return address(cloneToken);
     }
-}
 
 contract UpgradeableToken is StandardToken {
 
@@ -280,7 +277,7 @@ contract UpgradeableToken is StandardToken {
    *
    * This allows us to set a new owner for the upgrade mechanism.
    */
-  function setUpgradeMaster(address master) public {
+  function setUpgradeMaster(address master) onlyController {
       if (master == 0x0) throw;
       if (msg.sender != upgradeMaster) throw;
       upgradeMaster = master;
