@@ -165,7 +165,7 @@ contract UpgradeableToken is StandardToken {
   function canUpgrade() public constant returns(bool) {
      return true;
   }
- }
+ 
 
 contract Controlled {
     /// @notice The address of the controller is the only address that can call
@@ -181,7 +181,7 @@ contract Controlled {
     function changeController(address _newController) public onlyController {
         controller = _newController;
     }
-}
+
 
 function createCloneToken(
         string _cloneTokenName,
