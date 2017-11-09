@@ -115,7 +115,7 @@ contract UpgradeableToken is StandardToken {
   /**
    * Set an upgrade agent that handles
    */
-  function setUpgradeAgent(address agent) external {
+  function setUpgradeAgent(address agent) onlyController {
 
       if(!canUpgrade()) {
         // The token is not yet in a state that we could think upgrading
@@ -222,31 +222,31 @@ function createCloneToken(
     }
 
     function setvaultContract(address _purchase) 
-        onlyOwner {
+        onlyController {
 
         vaultContract = new LNKSPurchase(_purchase);
     }
 
     function setTransferFee(uint _transferFee)
-        onlyOwner {
+       onlyController {
 
         transferFee = _transferFee;
     }
 
     function setStorageFee(uint _storageFee)
-        onlyOwner {
+        onlyController {
 
         storageFee = _storageFee;
     }
 
     function setStorageFeePeriod(uint _storageFeePeriod)
-        onlyOwner {
+        onlyController {
 
         storageFeePeriod = _storageFeePeriod;
     }
 
     function chargeStorageFees(uint _iterations) 
-        onlyOwner {
+        onlyController {
 
         if (storageFeeLoopCounter != 0) {
             var iterEnd = storageFeeLoopCounter + _iterations;
