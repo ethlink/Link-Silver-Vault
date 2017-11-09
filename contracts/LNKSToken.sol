@@ -176,8 +176,6 @@ contract Controlled {
 
     function Controlled() public { controller = msg.sender;}
 
-    /// @notice Changes the controller of the contract
-    /// @param _newController The new controller of the contract
     function changeController(address _newController) public onlyController {
         controller = _newController;
     }
@@ -206,7 +204,7 @@ function createCloneToken(
         NewCloneToken(address(cloneToken), _snapshotBlock);
         return address(cloneToken);
     }
-}
+
     modifier onlyPayloadSize(uint size) {
         if(msg.data.length < size + 4) throw;
         _;
@@ -254,7 +252,7 @@ function createCloneToken(
             for (var i = storageFeeLoopCounter; i < iterEnd; i++) {
                 var fee = balances[balances_list[iterEnd]].mul(storageFee);
             }
-        }
+        
 
         var sinceLastCharge = now - lastStorageFeeCharged;        // the time since the last charge
         var chargeIterations = sinceLastCharge / storageFeePeriod;    // the charge cycles since the last charge
