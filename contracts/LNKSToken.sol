@@ -1,6 +1,6 @@
 pragma solidity ^0.4.11;
 
-import 'zeppelin/token/StandardToken.sol';              
+         
 import 'LNKSVault.sol';                              
 
 /// @title LNKS Token for which one token represents on gram of silver
