@@ -1,6 +1,7 @@
 pragma solidity ^0.4.11;
 
 import 'LNKSToken.sol'; 
+import 'Escrow.sol'; 
 
 
 /// @title 
