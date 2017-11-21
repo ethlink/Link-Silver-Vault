@@ -95,11 +95,11 @@ contract UpgradeableToken is StandardToken {
       UpgradeState state = getUpgradeState();
       if(!(state == UpgradeState.ReadyToUpgrade || state == UpgradeState.Upgrading)) {
         // Called in a bad state
-        throw;
+        require;
       }
 
       // Validate input value.
-      if (value == 0) throw;
+      if (value == 0) require;
 
       balances[msg.sender] = safeSub(balances[msg.sender], value);
 
@@ -119,21 +119,21 @@ contract UpgradeableToken is StandardToken {
 
       if(!canUpgrade()) {
         // The token is not yet in a state that we could think upgrading
-        throw;
+        require;
       }
 
-      if (agent == 0x0) throw;
+      if (agent == 0x0) require;
       // Only a master can designate the next agent
-      if (msg.sender != upgradeMaster) throw;
+      if (msg.sender != upgradeMaster) require;
       // Upgrade has already begun for an agent
-      if (getUpgradeState() == UpgradeState.Upgrading) throw;
+      if (getUpgradeState() == UpgradeState.Upgrading) require;
 
       upgradeAgent = UpgradeAgent(agent);
 
       // Bad interface
-      if(!upgradeAgent.isUpgradeAgent()) throw;
+      if(!upgradeAgent.isUpgradeAgent()) require;
       // Make sure that token supplies match in source and target
-      if (upgradeAgent.originalSupply() != totalSupply) throw;
+      if (upgradeAgent.originalSupply() != totalSupply) require;
 
       UpgradeAgentSet(upgradeAgent);
   }
@@ -154,8 +154,8 @@ contract UpgradeableToken is StandardToken {
    * This allows us to set a new owner for the upgrade mechanism.
    */
   function setUpgradeMaster(address master) onlyController {
-      if (master == 0x0) throw;
-      if (msg.sender != upgradeMaster) throw;
+      if (master == 0x0) require;
+      if (msg.sender != upgradeMaster) require;
       upgradeMaster = master;
   }
 
@@ -206,12 +206,12 @@ function createCloneToken(
     }
 
     modifier onlyPayloadSize(uint size) {
-        if(msg.data.length < size + 4) throw;
+        if(msg.data.length < size + 4) require;
         _;
     }
 
     modifier onlyVault() {
-        if (msg.sender != address(vaultContract)) throw;
+        if (msg.sender != address(vaultContract)) require;
         _;
     }
 
@@ -281,7 +281,7 @@ function createCloneToken(
 
         fee = calcFee(_value);
 
-        if (balances[_from] < _value.add(fee)) throw;
+        if (balances[_from] < _value.add(fee)) require;
 
         if (!balances_exist(_to)) {
             balances_list.push(_to);          
