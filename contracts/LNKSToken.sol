@@ -1,10 +1,11 @@
 pragma solidity ^0.4.11;
 
          
-import 'LNKSVault.sol';                              
+import './LNKSVault.sol';     
 
-/// @title LNKS Token for which one token represents on gram of silver
-/// @author Riaan F Venter~ RFVenter~ <msg@rfv.io>
+import "./OwnableMultiple.sol";
+
+
 contract LNKSToken is StandardToken {
     using SafeMath for uint;
 
